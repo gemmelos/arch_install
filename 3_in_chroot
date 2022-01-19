@@ -36,11 +36,11 @@ mkinitcpio -P
 
 chsh -s /bin/zsh
 
-printf "alias l='ls --color -lah'\n\
-alias v='nvim'\n\
-alias ez='nvim ~/.zshrc'\n\
-alias sz='source ~/.zshrc'\n" \
->> ~/.zshrc
+echo "alias l='ls --color -lah'" >> ~/.zshrc
+echo "alias v='nvim'" >> ~/.zshrc
+echo "alias ez='nvim ~/.zshrc'" >> ~/.zshrc
+echo "alias sz='source ~/.zshrc'" >> ~/.zshrc
+echo "PROMPT='%F{green}%n%f@%F{magenta}%m%f %F{blue}%B%~%b%f %# '" >> ~/.zshrc
 
 passwd root
 
