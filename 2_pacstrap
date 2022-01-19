@@ -31,7 +31,9 @@ pacstrap /mnt base linux linux-firmware \
     sudo \
     neovim \
     which \
-    tree
+    tree \
+    git \
+    base-devel
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
