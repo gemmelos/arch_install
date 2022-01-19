@@ -14,6 +14,12 @@ sed -i '/^#ParallelDownload/s/^.*$/ParallelDownloads = 9/' /etc/pacman.conf
 
 systemctl enable NetworkManager.service
 
+# TODO: Add bind mount to fstab for /myesp/my-install/[new-archie] /boot
+# The mount command accepts --bind or -o bind.
+# In the /etc/fstab file, you can use the following line:
+# /source /destination /boot none defaults,bind 0 0
+# /myesp/my-install/[new-archie] /boot none defaults,bind 0 0
+
 ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 hwclock --systohc
