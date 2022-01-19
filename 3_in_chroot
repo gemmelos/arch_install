@@ -30,7 +30,7 @@ echo 'arch' >> /etc/hostname
 # For LVM, system encryption or RAID, modify mkinitcpio.conf(5) and recreate the initramfs image:
 new_hooks='HOOKS=(base udev autodetect keyboard keymap modconf block encrypt lvm2 filesystems fsck)'
 pattern='^HOOKS\='
-sed -i "/$pattern/s/^\(.*\)$/#\1\n$new_hooks/" example_locale.gen
+sed -i "/$pattern/s/^\(.*\)$/#\1\n$new_hooks/" /etc/mkinitcpio.conf
 
 mkinitcpio -P
 
