@@ -35,5 +35,7 @@ pacstrap /mnt base linux linux-firmware \
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
+cp 3_in_chroot /mnt/root
+
 arch-chroot /mnt
 { set +x; } 2> /dev/null # silently disable xtrace
