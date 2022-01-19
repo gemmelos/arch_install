@@ -12,6 +12,8 @@ function g_exit() {
 set -x # enable xtrace
 sed -i '/^#ParallelDownload/s/^.*$/ParallelDownloads = 9/' /etc/pacman.conf
 
+systemctl enable NetworkManager.service
+
 ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 hwclock --systohc
