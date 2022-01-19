@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+function g_exit() {
+    echo Exiting...
+    exit 1
+}
+
+set -x # enable xtrace
+
+ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+
+hwclock --systohc
+
+# Uncomment en_US.UTF-8 UTF-8 and other needed locales. Generate the locales by running:
+sed -i '/en_US.UTF-8/s/^#//g' /etc/locale.gen
+
+locale-gen
+
+echo 'LANG=en_US.UTF-8' >> /etc/locale.conf
+
+echo 'arch' >> /etc/hostname
+
+# For LVM, system encryption or RAID, modify mkinitcpio.conf(5) and recreate the initramfs image:
+new_hooks='HOOKS=(base udev autodetect keyboard keymap modconf block encrypt lvm2 filesystems fsck)'
+pattern='^HOOKS\='
+sed -i "/$pattern/s/^\(.*\)$/#\1\n$new_hooks/" example_locale.gen
+
+mkinitcpio -P
+
+chsh -s /bin/zsh
+
+printf "alias l='ls --color -lah'\nalias v='nvim'\nalias ez='nvim ~/.zshrc'\nalias sz='~/.zshrc" >> ~/.zshrc
+
+passwd root
+
+{ set +x; } 2> /dev/null # silently disable xtrace

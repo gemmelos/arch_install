@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+function g_exit() {
+    echo Exiting...
+    exit 1
+}
+
+while true; do
+    read -p "Do you wish to install this program? [y/n] " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) g_exit;;
+        * ) echo "Please answer 'y' for yes or 'n' for no.";;
+    esac
+done
+
+
+set -x # enable xtrace
+# timedatectl set-ntp true
+{ set +x; } 2> /dev/null # silently disable xtrace
+
+
+read -p "Give me root partition to mkfs.ext4 on: " r_part
+if test ! -e $r_part; then
+    echo Given path \'$r_part\' does not exist.
+    g_exit
+fi
+set -x # enable xtrace
+# mkfs.ext4 /dev/root_partition
+{ set +x; } 2> /dev/null # silently disable xtrace
+
+read -p "Give me swap partition to mkswap on: " r_part
+if test ! -e $r_part; then
+    echo Given path \'$r_part\' does not exist.
+    g_exit
+fi
+set -x # enable xtrace
+# mkfs.ext4 /dev/root_partition
+{ set +x; } 2> /dev/null # silently disable xtrace
+
+
+# If you created a partition for swap, initialize it with mkswap(8):
+
+# # mkswap /dev/swap_partition
+# Note: For stacked block devices replace /dev/*_partition with the appropriate block device path.
+# If you created an EFI system partition, format it to FAT32 using mkfs.fat(8).
+
+# Warning: Only format the EFI system partition if you created it during the partitioning step. If there already was an EFI system partition on disk beforehand, reformatting it can destroy the boot loaders of other installed operating systems.
+# # mkfs.fat -F 32 /dev/efi_system_partition
+# Mount the file systems
+# Mount the root volume to /mnt. For example, if the root volume is /dev/root_partition:
+
+# # mount /dev/root_partition /mnt
+# Create any remaining mount points (such as /mnt/efi) using mkdir(1) and mount their corresponding volumes.
+
+# For UEFI systems, mount the EFI system partition:
+
+# # mount /dev/efi_system_partition /mnt/boot
+# If you created a swap volume, enable it with swapon(8):
+
+# # swapon /dev/swap_partition
