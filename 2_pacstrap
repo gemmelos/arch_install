@@ -22,6 +22,8 @@ done
 set -x # enable xtrace
 timedatectl set-ntp true
 
+echo 'ParallelDownloads = 9' >> /etc/pacman.conf 
+
 pacstrap /mnt base linux linux-firmware \
     lvm2 \
     networkmanager \

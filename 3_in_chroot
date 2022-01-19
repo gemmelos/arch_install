@@ -10,6 +10,7 @@ function g_exit() {
 }
 
 set -x # enable xtrace
+echo 'ParallelDownloads = 9' >> /etc/pacman.conf 
 
 ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
