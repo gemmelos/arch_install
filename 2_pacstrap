@@ -33,7 +33,8 @@ pacstrap /mnt base linux linux-firmware \
     which \
     tree \
     git \
-    base-devel
+    base-devel \
+    efibootmgr
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
